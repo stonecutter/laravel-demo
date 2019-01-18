@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f34e4b88b6b675eb530773192d7caa7",
+    "content-hash": "5a99f710640ce12a2ac13132b5773ffe",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -1690,23 +1690,23 @@
         },
         {
             "name": "justinrainbow/json-schema",
-            "version": "5.2.7",
+            "version": "5.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/justinrainbow/json-schema.git",
-                "reference": "8560d4314577199ba51bf2032f02cd1315587c23"
+                "reference": "dcb6e1006bb5fd1e392b4daa68932880f37550d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/8560d4314577199ba51bf2032f02cd1315587c23",
-                "reference": "8560d4314577199ba51bf2032f02cd1315587c23",
+                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/dcb6e1006bb5fd1e392b4daa68932880f37550d4",
+                "reference": "dcb6e1006bb5fd1e392b4daa68932880f37550d4",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.1",
+                "friendsofphp/php-cs-fixer": "~2.2.20",
                 "json-schema/json-schema-test-suite": "1.2.0",
                 "phpunit/phpunit": "^4.8.35"
             },
@@ -1752,7 +1752,7 @@
                 "json",
                 "schema"
             ],
-            "time": "2018-02-14T22:26:30+00:00"
+            "time": "2019-01-14T23:55:14+00:00"
         },
         {
             "name": "larapack/doctrine-support",
@@ -1898,16 +1898,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.7.20",
+            "version": "v5.7.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "10cd20294b5668f90ba91996236834e71f7ff670"
+                "reference": "25f74458a242b61cc9e9c09d31f94fb13ed805f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/10cd20294b5668f90ba91996236834e71f7ff670",
-                "reference": "10cd20294b5668f90ba91996236834e71f7ff670",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/25f74458a242b61cc9e9c09d31f94fb13ed805f3",
+                "reference": "25f74458a242b61cc9e9c09d31f94fb13ed805f3",
                 "shasum": ""
             },
             "require": {
@@ -2040,7 +2040,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2019-01-08T14:39:11+00:00"
+            "time": "2019-01-15T15:20:32+00:00"
         },
         {
             "name": "laravel/nexmo-notification-channel",
@@ -2799,16 +2799,16 @@
         },
         {
             "name": "opis/closure",
-            "version": "3.1.4",
+            "version": "3.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opis/closure.git",
-                "reference": "3f28ad09e82ce254d12ca01b0fb8592d0c861eb5"
+                "reference": "41f5da65d75cf473e5ee582df8fc7f2c733ce9d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opis/closure/zipball/3f28ad09e82ce254d12ca01b0fb8592d0c861eb5",
-                "reference": "3f28ad09e82ce254d12ca01b0fb8592d0c861eb5",
+                "url": "https://api.github.com/repos/opis/closure/zipball/41f5da65d75cf473e5ee582df8fc7f2c733ce9d6",
+                "reference": "41f5da65d75cf473e5ee582df8fc7f2c733ce9d6",
                 "shasum": ""
             },
             "require": {
@@ -2856,7 +2856,7 @@
                 "serialization",
                 "serialize"
             ],
-            "time": "2019-01-14T09:58:52+00:00"
+            "time": "2019-01-14T14:45:33+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -3843,16 +3843,16 @@
         },
         {
             "name": "sinkcup/laravel-make-auth-socialite",
-            "version": "3.2.0",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sinkcup/laravel-make-auth-socialite.git",
-                "reference": "c6e708498c7450a4b31e1f6356fd261b27faf915"
+                "reference": "bf5d596fc884282134d64a06312b665c1e28b82c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sinkcup/laravel-make-auth-socialite/zipball/c6e708498c7450a4b31e1f6356fd261b27faf915",
-                "reference": "c6e708498c7450a4b31e1f6356fd261b27faf915",
+                "url": "https://api.github.com/repos/sinkcup/laravel-make-auth-socialite/zipball/bf5d596fc884282134d64a06312b665c1e28b82c",
+                "reference": "bf5d596fc884282134d64a06312b665c1e28b82c",
                 "shasum": ""
             },
             "require": {
@@ -3884,20 +3884,20 @@
                 }
             ],
             "description": "Automatically generate database, pages and routes for Laravel Socialite",
-            "time": "2019-01-13T07:54:57+00:00"
+            "time": "2019-01-17T12:51:49+00:00"
         },
         {
             "name": "socialiteproviders/manager",
-            "version": "v3.3.3",
+            "version": "v3.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SocialiteProviders/Manager.git",
-                "reference": "f87057486472e35cf0a208c870f613289806ade1"
+                "reference": "58b72a667da292a1d0a0b1e6e9aeda4053617030"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SocialiteProviders/Manager/zipball/f87057486472e35cf0a208c870f613289806ade1",
-                "reference": "f87057486472e35cf0a208c870f613289806ade1",
+                "url": "https://api.github.com/repos/SocialiteProviders/Manager/zipball/58b72a667da292a1d0a0b1e6e9aeda4053617030",
+                "reference": "58b72a667da292a1d0a0b1e6e9aeda4053617030",
                 "shasum": ""
             },
             "require": {
@@ -3929,10 +3929,14 @@
                 {
                     "name": "Andy Wendt",
                     "email": "andy@awendt.com"
+                },
+                {
+                    "name": "Anton Komarev",
+                    "email": "a.komarev@cybercog.su"
                 }
             ],
             "description": "Easily add new or override built-in providers in Laravel Socialite.",
-            "time": "2019-01-11T20:44:14+00:00"
+            "time": "2019-01-16T07:58:54+00:00"
         },
         {
             "name": "socialiteproviders/weixin",
@@ -6815,16 +6819,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.5.1",
+            "version": "7.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "c23d78776ad415d5506e0679723cb461d71f488f"
+                "reference": "7c89093bd00f7d5ddf0ab81dee04f801416b4944"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c23d78776ad415d5506e0679723cb461d71f488f",
-                "reference": "c23d78776ad415d5506e0679723cb461d71f488f",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7c89093bd00f7d5ddf0ab81dee04f801416b4944",
+                "reference": "7c89093bd00f7d5ddf0ab81dee04f801416b4944",
                 "shasum": ""
             },
             "require": {
@@ -6895,7 +6899,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-12-12T07:20:32+00:00"
+            "time": "2019-01-15T08:19:08+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
