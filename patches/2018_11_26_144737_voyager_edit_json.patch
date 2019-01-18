@@ -1,0 +1,32 @@
+diff -uNr vendor/tcg/voyager/resources/views/bread/browse.blade.php sinkcup/tcg/voyager/resources/views/bread/browse.blade.php
+--- vendor/tcg/voyager/resources/views/bread/browse.blade.php	2018-12-27 23:57:24.000000000 +0800
++++ sinkcup/tcg/voyager/resources/views/bread/browse.blade.php	2019-01-02 16:47:09.391446769 +0800
+@@ -173,7 +173,7 @@
+                                                     @endif
+                                                 @else
+                                                     @include('voyager::multilingual.input-hidden-bread-browse')
+-                                                    <span>{{ $data->{$row->field} }}</span>
++                                                    <span>{{ is_array($data->{$row->field}) ? json_encode($data->{$row->field}, JSON_UNESCAPED_UNICODE) : $data->{$row->field} }}</span>
+                                                 @endif
+                                             </td>
+                                         @endforeach
+diff -uNr vendor/tcg/voyager/resources/views/formfields/code_editor.blade.php sinkcup/tcg/voyager/resources/views/formfields/code_editor.blade.php
+--- vendor/tcg/voyager/resources/views/formfields/code_editor.blade.php	2018-11-08 22:15:01.494637126 +0800
++++ sinkcup/tcg/voyager/resources/views/formfields/code_editor.blade.php	2018-11-08 22:08:15.247536520 +0800
+@@ -1,2 +1,2 @@
+-<div id="{{ $row->field }}" data-theme="{{ @$options->theme }}" data-language="{{ @$options->language }}" class="ace_editor min_height_200" name="{{ $row->field }}">@if(isset($dataTypeContent->{$row->field})){{ old($row->field, $dataTypeContent->{$row->field}) }}@elseif(isset($options->default)){{ old($row->field, $options->default) }}@else{{ old($row->field) }}@endif</div>
+-<textarea name="{{ $row->field }}" id="{{ $row->field }}_textarea" class="hidden">@if(isset($dataTypeContent->{$row->field})){{ old($row->field, $dataTypeContent->{$row->field}) }}@elseif(isset($options->default)){{ old($row->field, $options->default) }}@else{{ old($row->field) }}@endif</textarea>
++<div id="{{ $row->field }}" data-theme="{{ @$options->theme }}" data-language="{{ @$options->language }}" class="ace_editor min_height_200" name="{{ $row->field }}">@if(isset($dataTypeContent->{$row->field})){{ old($row->field, is_array($dataTypeContent->{$row->field}) ? json_encode($dataTypeContent->{$row->field}, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) : $dataTypeContent->{$row->field}) }}@elseif(isset($options->default)){{ old($row->field, $options->default) }}@else{{ old($row->field) }}@endif</div>
++<textarea name="{{ $row->field }}" id="{{ $row->field }}_textarea" class="hidden">@if(isset($dataTypeContent->{$row->field})){{ old($row->field, is_array($dataTypeContent->{$row->field}) ? json_encode($dataTypeContent->{$row->field}, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) : $dataTypeContent->{$row->field}) }}@elseif(isset($options->default)){{ old($row->field, $options->default) }}@else{{ old($row->field) }}@endif</textarea>
+diff -uNr vendor/tcg/voyager/resources/views/bread/read.blade.php sinkcup/tcg/voyager/resources/views/bread/read.blade.php
+--- vendor/tcg/voyager/resources/views/bread/read.blade.php	2018-12-27 23:57:24.000000000 +0800
++++ sinkcup/tcg/voyager/resources/views/bread/read.blade.php	2019-01-02 18:44:27.265951037 +0800
+@@ -110,7 +110,7 @@
+                                 @endif
+                             @else
+                                 @include('voyager::multilingual.input-hidden-bread-read')
+-                                <p>{{ $dataTypeContent->{$row->field} }}</p>
++                                <p>{{ is_array($dataTypeContent->{$row->field}) ? json_encode($dataTypeContent->{$row->field}, JSON_UNESCAPED_UNICODE) : $dataTypeContent->{$row->field} }}</p>
+                             @endif
+                         </div><!-- panel-body -->
+                         @if(!$loop->last)
