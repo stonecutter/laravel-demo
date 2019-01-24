@@ -1,0 +1,11 @@
+--- vendor/tcg/voyager/src/Commands/InstallCommand.php	2018-12-15 22:02:32.229124798 +0800
++++ sinkcup/tcg/voyager/src/Commands/InstallCommand.php	2018-12-15 22:01:05.753755187 +0800
+@@ -75,7 +75,7 @@
+         $this->call('vendor:publish', ['--provider' => ImageServiceProviderLaravel5::class]);
+ 
+         $this->info('Migrating the database tables into your application');
+-        $this->call('migrate');
++        $this->call('migrate', ['--force' => true]);
+ 
+         $this->info('Attempting to set Voyager User model as parent to App\User');
+         if (file_exists(app_path('User.php'))) {
