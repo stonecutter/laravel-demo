@@ -1,0 +1,11 @@
+--- vendor/tcg/voyager/src/Http/Controllers/VoyagerBaseController.php	2018-12-27 23:57:24.000000000 +0800
++++ sinkcup/tcg/voyager/src/Http/Controllers/VoyagerBaseController.php	2019-01-02 17:43:39.050522629 +0800
+@@ -65,7 +65,7 @@
+             // If a column has a relationship associated with it, we do not want to show that field
+             $this->removeRelationshipField($dataType, 'browse');
+ 
+-            if ($search->value && $search->key && $search->filter) {
++            if ((!empty($search->value) || $search->value === '0') && $search->key && $search->filter) {
+                 $search_filter = ($search->filter == 'equals') ? '=' : 'LIKE';
+                 $search_value = ($search->filter == 'equals') ? $search->value : '%'.$search->value.'%';
+                 $query->where($search->key, $search_filter, $search_value);
