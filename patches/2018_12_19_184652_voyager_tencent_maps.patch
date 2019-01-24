@@ -1,0 +1,110 @@
+--- vendor/tcg/voyager/resources/views/formfields/coordinates.blade.php	2018-10-22 00:15:14.000000000 +0800
++++ sinkcup/tcg/voyager/resources/views/formfields/coordinates.blade.php	2018-12-19 20:57:47.755610692 +0800
+@@ -19,6 +19,9 @@
+         @empty
+             var center = {lat: {{ config('voyager.googlemaps.center.lat') }}, lng: {{ config('voyager.googlemaps.center.lng') }}};
+         @endforelse
++
++        @if (config('voyager.maps.driver') == 'google')
++        var center = {lat: lat, lng: lng};
+         var map = new google.maps.Map(document.getElementById('map'), {
+             zoom: {{ config('voyager.googlemaps.zoom') }},
+             center: center
+@@ -43,7 +46,85 @@
+             document.getElementById('lat').value = this.position.lat();
+             document.getElementById('lng').value = this.position.lng();
+         });
++        @endif
++
++        @if (config('voyager.maps.driver') == 'tencent')
++            @forelse($dataTypeContent->getCoordinates() as $point)
++                var center = new qq.maps.LatLng({{ $point['lat'] }}, {{ $point['lng'] }});
++            @empty
++                var center = new qq.maps.LatLng({{ config('voyager.maps.center.lat') }}, {{ config('voyager.maps.center.lng') }});
++            @endforelse
++            var map = new qq.maps.Map(document.getElementById("map"), {
++                zoom: {{ config('voyager.maps.zoom') }},
++                center: center,
++            });
++            var latlngBounds = new qq.maps.LatLngBounds();
++            //调用Poi检索类
++            searchService = new qq.maps.SearchService({
++                complete : function(results){
++                    var pois = results.detail.pois;
++                    for(var i = 0,l = pois.length;i < l; i++){
++                        var poi = pois[i];
++                        latlngBounds.extend(poi.latLng);
++                        var marker = new qq.maps.Marker({
++                            map:map,
++                            position: poi.latLng
++                        });
++
++                        marker.setTitle(i+1);
++
++                        markers.push(marker);
++                    }
++                    map.fitBounds(latlngBounds);
++                }
++            });
++
++        var anchor = new qq.maps.Point(6, 6),
++            size = new qq.maps.Size(24, 24),
++            origin = new qq.maps.Point(0, 0),
++            icon = new qq.maps.MarkerImage('https://lbs.qq.com/javascript_v2/img/center.gif', size, origin, anchor);
++            var marker = new qq.maps.Marker({
++                position: center,
++                map: map,
++                draggable: true,
++                icon: icon
++            });
++            qq.maps.event.addListener(marker,'dragend',function(event) {
++                document.getElementById('lat').value = event.latLng.getLat();
++                document.getElementById('lng').value = event.latLng.getLng();
++            });
++            qq.maps.event.addListener(map, 'click', function(event) {
++                marker.setPosition(event.latLng);
++                document.getElementById('lat').value = event.latLng.getLat();
++                document.getElementById('lng').value = event.latLng.getLng();
++            });
++        @endif
++    }
++@if (config('voyager.maps.driver') == 'tencent')
++    var searchService,map,markers = [];
++    //清除地图上的marker
++    function clearOverlays(overlays){
++        var overlay;
++        while(overlay = overlays.pop()){
++            overlay.setMap(null);
++        }
++    }
++    function searchKeyword() {
++        var keyword = document.getElementById("keyword").value;
++        clearOverlays(markers);
++        searchService.setLocation('上海');
++        searchService.search(keyword);
+     }
++@endif
+ </script>
++@if (config('voyager.maps.driver') == 'tencent')
++<input id="keyword" type="text" value="">
++<input type="button" value="搜索" onclick="searchKeyword()">
++@endif
+ <div id="map"></div>
++@if (config('voyager.maps.driver') == 'google')
+ <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ config('voyager.googlemaps.key') }}&callback=initMap"></script>
++@endif
++@if (config('voyager.maps.driver') == 'tencent')
++<script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key={{ config('voyager.tencent_maps.key') }}&callback=initMap"></script>
++@endif
+--- vendor/tcg/voyager/resources/views/partials/coordinates-static-image.blade.php	2018-10-22 00:15:14.000000000 +0800
++++ sinkcup/tcg/voyager/resources/views/partials/coordinates-static-image.blade.php	2018-12-19 19:32:29.264391848 +0800
+@@ -1 +1,7 @@
+-<img src="https://maps.googleapis.com/maps/api/staticmap?zoom={{ config('voyager.googlemaps.zoom') }}&size=400x100&maptype=roadmap&@foreach($data->getCoordinates() as $point)markers=color:red%7C{{ $point['lat'] }},{{ $point['lng'] }}&center={{ $point['lat'] }},{{ $point['lng'] }}@endforeach&key={{ config('voyager.googlemaps.key') }}"/>
+\ 文件尾没有换行符
++@if (!empty($data->getCoordinates()))
++    @if (config('voyager.maps.driver') == 'google')
++        <img src="https://maps.googleapis.com/maps/api/staticmap?zoom={{ config('voyager.googlemaps.zoom') }}&size=400x100&maptype=roadmap&@foreach($data->getCoordinates() as $point)markers=color:red%7C{{ $point['lat'] }},{{ $point['lng'] }}&center={{ $point['lat'] }},{{ $point['lng'] }}@endforeach&key={{ config('voyager.googlemaps.key') }}"/>
++    @elseif (config('voyager.maps.driver') == 'tencent')
++        <img src="https://apis.map.qq.com/ws/staticmap/v2/?zoom={{ config('voyager.maps.zoom') }}&size=400x100&maptype=roadmap&@foreach($data->getCoordinates() as $point)markers=color:red%7C{{ $point['lat'] }},{{ $point['lng'] }}&center={{ $point['lat'] }},{{ $point['lng'] }}@endforeach&key={{ config('voyager.tencent_maps.key') }}"/>
++    @endif
++@endif
