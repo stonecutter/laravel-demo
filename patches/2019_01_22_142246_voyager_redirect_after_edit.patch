@@ -1,0 +1,21 @@
+--- vendor/tcg/voyager/src/Http/Controllers/VoyagerBaseController.php	2019-01-22 14:21:24.699205553 +0800
++++ stonecutter/tcg/voyager/src/Http/Controllers/VoyagerBaseController.php	2019-01-22 14:20:21.479064364 +0800
+@@ -219,6 +219,9 @@
+             $view = "voyager::$slug.edit-add";
+         }
+ 
++        if (!empty($request->header('referer'))) {
++            redirect()->setIntendedUrl($request->header('referer'));
++        }
+         return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable'));
+     }
+ 
+@@ -250,7 +253,7 @@
+             event(new BreadDataUpdated($dataType, $data));
+ 
+             return redirect()
+-                ->route("voyager.{$dataType->slug}.index")
++                ->intended(route("voyager.{$dataType->slug}.index"))
+                 ->with([
+                     'message'    => __('voyager::generic.successfully_updated')." {$dataType->display_name_singular}",
+                     'alert-type' => 'success',
