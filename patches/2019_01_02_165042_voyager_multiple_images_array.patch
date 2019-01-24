@@ -1,0 +1,44 @@
+diff -uNr vendor/tcg/voyager/resources/views/bread/browse.blade.php sinkcup/tcg/voyager/resources/views/bread/browse.blade.php
+--- vendor/tcg/voyager/resources/views/bread/browse.blade.php	2019-01-02 17:03:05.868334000 +0800
++++ sinkcup/tcg/voyager/resources/views/bread/browse.blade.php	2019-01-02 17:03:40.081574734 +0800
+@@ -164,7 +164,7 @@
+                                                 @elseif($row->type == 'coordinates')
+                                                     @include('voyager::partials.coordinates-static-image')
+                                                 @elseif($row->type == 'multiple_images')
+-                                                    @php $images = json_decode($data->{$row->field}); @endphp
++                                                    @php $images = is_array($data->{$row->field}) ? $data->{$row->field} : json_decode($data->{$row->field}); @endphp
+                                                     @if($images)
+                                                         @php $images = array_slice($images, 0, 3); @endphp
+                                                         @foreach($images as $image)
+diff -uNr vendor/tcg/voyager/resources/views/formfields/multiple_images.blade.php sinkcup/tcg/voyager/resources/views/formfields/multiple_images.blade.php
+--- vendor/tcg/voyager/resources/views/formfields/multiple_images.blade.php	2018-12-27 23:57:24.000000000 +0800
++++ sinkcup/tcg/voyager/resources/views/formfields/multiple_images.blade.php	2019-01-02 16:59:57.396466994 +0800
+@@ -1,11 +1,11 @@
+ <br>
+ @if(isset($dataTypeContent->{$row->field}))
+-    <?php $images = json_decode($dataTypeContent->{$row->field}); ?>
++    <?php $images = is_array($dataTypeContent->{$row->field}) ? $dataTypeContent->{$row->field} : json_decode($dataTypeContent->{$row->field}); ?>
+     @if($images != null)
+         @foreach($images as $image)
+             <div class="img_settings_container" data-field-name="{{ $row->field }}" style="float:left;padding-right:15px;">
+                 <a href="#" class="voyager-x remove-multi-image" style="position: absolute;"></a>
+-                <img src="{{ Voyager::image( $image ) }}" data-file-name="{{ $image }}" data-id="{{ $dataTypeContent->id }}" style="max-width:200px; height:auto; clear:both; display:block; padding:2px; border:1px solid #ddd; margin-bottom:5px;">
++                <img src="{{ Voyager::image( $image ) }}" data-file-name="{{ $image }}" data-id="{{ $dataTypeContent->id }}" class="img-responsive" />
+             </div>
+         @endforeach
+     @endif
+diff -uNr vendor/tcg/voyager/resources/views/bread/read.blade.php sinkcup/tcg/voyager/resources/views/bread/read.blade.php
+--- vendor/tcg/voyager/resources/views/bread/read.blade.php	2018-10-22 00:15:14.000000000 +0800
++++ sinkcup/tcg/voyager/resources/views/bread/read.blade.php	2018-12-28 21:29:06.469817673 +0800
+@@ -43,8 +43,9 @@
+                                 <img class="img-responsive"
+                                      src="{{ filter_var($dataTypeContent->{$row->field}, FILTER_VALIDATE_URL) ? $dataTypeContent->{$row->field} : Voyager::image($dataTypeContent->{$row->field}) }}">
+                             @elseif($row->type == 'multiple_images')
+-                                @if(json_decode($dataTypeContent->{$row->field}))
+-                                    @foreach(json_decode($dataTypeContent->{$row->field}) as $file)
++                                @if(is_array($dataTypeContent->{$row->field}) || json_decode($dataTypeContent->{$row->field}))
++                                    <?php $images = is_array($dataTypeContent->{$row->field}) ? $dataTypeContent->{$row->field} : json_decode($dataTypeContent->{$row->field}); ?>
++                                    @foreach($images as $file)
+                                         <img class="img-responsive"
+                                              src="{{ filter_var($file, FILTER_VALIDATE_URL) ? $file : Voyager::image($file) }}">
+                                     @endforeach
