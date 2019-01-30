@@ -1,0 +1,11 @@
+--- vendor/tcg/voyager/src/Models/DataRow.php	2019-01-30 12:15:51.407015955 +0800
++++ stonecutter/voyager/src/Models/DataRow.php	2019-01-30 12:22:08.805076598 +0800
+@@ -44,7 +44,7 @@
+      */
+     public function sortByUrl($orderBy, $sortOrder)
+     {
+-        $params = [];
++        $params = request()->query();
+         $isDesc = $sortOrder != 'asc';
+         if ($this->isCurrentSortField($orderBy) && $isDesc) {
+             $params['sort_order'] = 'asc';
