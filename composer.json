@@ -21,7 +21,6 @@
         "socialiteproviders/weixin": "^4.0",
         "socialiteproviders/weixin-web": "^3.0",
         "stonecutter/laravel-log-wechat": "^0.2.1",
-        "tcg/voyager": "^1.1",
         "toin0u/geotools-laravel": "^1.0"
     },
     "require-dev": {

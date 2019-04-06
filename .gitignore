@@ -3,7 +3,6 @@
 /public/hot
 /public/js/app.js
 /public/storage
-/public/vendor/tcg/voyager
 /storage/*.key
 /vendor
 /.idea
@@ -17,7 +16,3 @@ yarn-error.log
 .env.testing
 .phpunit.result.cache
 _ide_helper.php
-/database/migrations/2016_01_01_000000_create_pages_table.php
-/database/migrations/2016_01_01_000000_create_posts_table.php
-/database/migrations/2016_02_15_204651_create_categories_table.php
-/database/migrations/2017_04_11_000000_alter_post_nullable_fields_table.php
