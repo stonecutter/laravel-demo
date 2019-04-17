@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 STARTED_AT=$(date +%s)
 ./vendor/bin/phpunit --version
-for i in patches/*.patch; do patch -N -p0 -i $i || true; done
+if [ -n "$(ls patches/)" ]; then
+    for i in patches/*.patch; do
+        patch -N -p0 -i $i || true;
+    done;
+fi
 php artisan migrate
 php artisan migrate:refresh
 if [ $? -ne 0 ]; then
