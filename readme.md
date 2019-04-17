@@ -1,69 +1,181 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# laravel-demo
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+[![CircleCI](https://circleci.com/gh/stonecutter/laravel-demo.svg?style=svg)](https://circleci.com/gh/stonecutter/laravel-demo)
 
-## About Laravel
+## 配置开发环境（以Ubuntu 18.10为例）
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+### 安装Apache、MySQL、PHP和Redis
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- 安装Apache：
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+```
+sudo apt install apache2
+a2enmod rewrite
+sudo service apache2 restart
+```
 
-## Learning Laravel
+- 安装PHP：
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+```
+sudo apt install php7.2 php7.2-mbstring php7.2-xml php7.2-curl php7.2-mysql
+```
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+- 安装MySQL：
 
-## Laravel Sponsors
+```
+sudo apt install mysql-server mysql-client
+```
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
+- 安装Redis：
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
+```
+sudo apt install redis-server
+```
 
-## Contributing
+### 安装nodejs和npm：
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+sudo apt install nodejs npm
+```
 
-## Security Vulnerabilities
+注意：npm禁止设置为淘宝加速，会改变`package-lock.json`中的组件下载地址，导致国外构建上线时下载缓慢。  
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 安装Composer
 
-## License
+```
+php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.php');"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
+mv composer.phar /usr/local/bin/composer
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- 配置中国镜像：Composer镜像不会改变`composer.lock`中的下载地址，可放心使用
+
+```
+composer config -g repo.packagist composer https://packagist.laravel-china.org
+```
+
+### 安装扩展包依赖
+
+```
+composer install
+npm install
+npm run dev
+```
+
+### 生成配置文件并修改环境变量
+
+- 生成`.env`和秘钥
+
+```
+cp .env.example .env
+php artisan key:generate
+```
+
+- 配置环境变量
+
+```
+DB_DATABASE=xxx_local
+DB_USERNAME=username
+DB_PASSWORD=password
+```
+
+- 手动建库
+
+```
+mysql -uroot -p
+create database xxx_local;
+```
+
+- 运行测试
+
+```
+./phpunit.sh
+./vendor/bin/phpunit tests/Unit/ExampleTest.php --filter testBasicTest
+```
+
+### 通过建立软连接来配置本地路径
+
+```
+sudo ln -s /config/apache2/site-available/laravel.conf /etc/apache2/sites-enabled
+sudo ln -s $(pwd) /var/www/laravel-demo
+```
+
+### HTTP访问项目
+
+```
+curl http://laravel-demo.localhost
+```
+
+或者
+
+```
+google-chrome http://laravel-demo.localhost
+```
+
+## 开发流程
+
+Github Flow: https://www.ruanyifeng.com/blog/2015/12/git-workflow.html
+
+Closing issues using keywords: https://help.github.com/articles/closing-issues-via-commit-messages/
+
+语义化版本: http://semver.org/lang/zh-CN/
+
+### GitHub issue flow
+
+```
+# create issue on github.com, get issue ID xxx
+git checkout -b issue-xxx
+# coding
+# testing
+git add Foo.php FooTest.php
+git commit -m 'new/fix: feature/bug detail. close #xxx'
+git push origin issue-xxx
+# CI(lint, test)
+# New pull request
+# review by other body
+# merge to master
+# CD(docker build lastest)
+# 如果有问题，则在issue里评论并打开
+git checkout -b issue-xxx-1
+...
+git commit -m 'fix: bug detail. close #xxx'
+...
+# 如果再有问题，增加最后的数字
+git checkout -b issue-xxx-2
+```
+
+## 上线生产环境
+
+```
+git tag -a 1.2.3 -m 'fix: a bug'
+git push --tags
+# CD(docker build tag)
+```
+
+## 临时修改开源package
+
+方法：做补丁。
+
+```
+cp vendor/org/repo/Demo.php ./
+vi Demo.php
+diff -uN vendor/org/repo/Demo.php ./Demo.php > patches/Y_m_d_His_repo_demo.patch
+rm Demo.php
+patch -p0 < patches/Y_m_d_His_repo_demo.patch
+```
+
+## 贡献到开源项目
+
+patches越来越多，一旦开源项目升级，patch就会失效，需要重新定位行数，维护成本很高，所以要经常抽时间把patch贡献到开源项目里。
+
+```
+fork org/repo me/repo
+# create issue on github.com/org/repo, get issue ID xxx
+git clone me/repo
+git checkout -b issue-xxx
+# coding
+git commit -m 'new/fix: a feature/a bug. close org/repo#xxx'
+git push origin issue-xxx
+# pull request
+```
