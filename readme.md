@@ -153,29 +153,42 @@ git push --tags
 # CD(docker build tag)
 ```
 
-## 临时修改开源package
+## 修改开源package
 
-方法：做补丁。
+方法：做补丁 并且 贡献到开源项目。
 
-```
-cp vendor/org/repo/Demo.php ./
-vi Demo.php
-diff -uN vendor/org/repo/Demo.php ./Demo.php > patches/Y_m_d_His_repo_demo.patch
-rm Demo.php
-patch -p0 < patches/Y_m_d_His_repo_demo.patch
-```
-
-## 贡献到开源项目
-
-patches越来越多，一旦开源项目升级，patch就会失效，需要重新定位行数，维护成本很高，所以要经常抽时间把patch贡献到开源项目里。
+patches越来越多，一旦开源项目升级，patch就会失效，需要重新定位行数，维护成本很高，所以一定要贡献到开源项目里，下次升级就可以删除patch了。
 
 ```
-fork org/repo me/repo
-# create issue on github.com/org/repo, get issue ID xxx
-git clone me/repo
-git checkout -b issue-xxx
+# fork org/package stonecutter/package
+git clone stonecutter/package
+cd package
+# checkout last tag
+git checkout 1.2.3
 # coding
-git commit -m 'new/fix: a feature/a bug. close org/repo#xxx'
+```
+
+### 做补丁
+
+```
+diff -uN ../project/vendor/org/package/Foo.php Foo.php > ../project/patches/Y_m_d_His_repo_something.patch
+diff -uN ../project/vendor/org/package/Bar.php Bar.php >> ../project/patches/Y_m_d_His_repo_something.patch
+
+cd ../project
+vi patches/Y_m_d_His_repo_something.patch
+# 修改patch里面的文件路径，否则会报错，参考格式：https://gist.github.com/sinkcup/39c8ce69e78d12287789606208e3901c
+patch -p0 < patches/Y_m_d_His_repo_something.patch
+./phpunit.sh
+```
+
+### 贡献到开源项目
+
+```
+# create issue on github.com/org/package, get issue ID xxx
+cd ../package
+git checkout -b issue-xxx
+git add
+git commit -m 'new/fix: a feature/a bug. close org/package#xxx'
 git push origin issue-xxx
-# pull request
+# New pull request
 ```
